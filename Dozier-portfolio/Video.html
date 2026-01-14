@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>影片作品｜Dozier</title>
+
+<style>
+:root{
+  --bg:#131e74;
+  --card:#F2E4C4;
+  --accent:#3c64bb;
+  --text:#333;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+/* ===== Header ===== */
+header {
+  text-align: center;
+  padding: 60px 20px 40px;
+  color: var(--card);
+}
+
+header h1 {
+  margin: 0;
+  letter-spacing: 6px;
+  font-size: 36px;
+}
+
+header p {
+  margin-top: 10px;
+  opacity: 0.8;
+}
+
+.back {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 8px 22px;
+  border-radius: 20px;
+  border: 1px solid var(--card);
+  color: var(--card);
+  text-decoration: none;
+  font-size: 13px;
+  transition:.3s;
+}
+
+.back:hover{
+  background:var(--card);
+  color:var(--bg);
+}
+
+/* ===== Grid ===== */
+.gallery {
+  max-width: 1100px;
+  margin: auto;
+  padding: 40px 20px 80px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+
+@media (min-width: 768px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ===== Work Card ===== */
+.work-card {
+  background: var(--card);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+  transition: .4s ease;
+}
+
+.work-card:hover {
+  transform: translateY(-10px);
+}
+
+/* video thumbnail */
+.work-thumb{
+  position:relative;
+}
+
+.work-thumb video {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+@media (min-width:768px){
+  .work-thumb video{
+    height:360px;
+  }
+}
+
+.work-thumb::after{
+  content:"▶";
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:70px;
+  color:white;
+  opacity:.7;
+  pointer-events:none;
+}
+
+/* ===== Info ===== */
+.work-info {
+  padding: 24px 22px;
+}
+
+.work-info h2 {
+  margin: 0 0 12px;
+}
+
+.view-btn{
+  display:inline-block;
+  margin-top: 10px;
+  padding: 10px 26px;
+  background: var(--accent);
+  color: var(--card);
+  border-radius: 20px;
+  text-decoration: none;
+  transition:.3s;
+}
+
+.view-btn:hover{
+  background:#00d0ff;
+}
+
+/* ===== Lightbox ===== */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.lightbox video {
+  max-width: 92%;
+  max-height: 92%;
+  border-radius: 16px;
+  background:black;
+}
+
+.close {
+  position: absolute;
+  top: 25px;
+  right: 30px;
+  font-size: 36px;
+  color: var(--card);
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>影片</h1>
+  <p>Animation / Short Film</p>
+  <a href="works.html" class="back">← 回到分類</a>
+</header>
+
+<main class="gallery">
+
+<div class="work-card">
+  <div class="work-thumb">
+    <video src="images/kiss.mp4" muted autoplay loop></video>
+  </div>
+  <div class="work-info">
+    <h2>kiss kiss 起司</h2>
+    <a href="#" class="view-btn" data-video="images/kiss.mp4">查看作品</a>
+  </div>
+</div>
+
+<div class="work-card">
+  <div class="work-thumb">
+    <video src="images/climb.mp4" muted autoplay loop></video>
+  </div>
+  <div class="work-info">
+    <h2>在通風管道翻滾</h2>
+    <a href="#" class="view-btn" data-video="images/climb.mp4">查看作品</a>
+  </div>
+</div>
+
+<div class="work-card">
+  <div class="work-thumb">
+    <video src="images/jump.mp4" muted autoplay loop></video>
+  </div>
+  <div class="work-info">
+    <h2>跳傘預備，1、2、3，跳!!!!</h2>
+    <a href="#" class="view-btn" data-video="images/jump.mp4">查看作品</a>
+  </div>
+</div>
+
+<div class="work-card">
+  <div class="work-thumb">
+    <video src="images/wall.mp4" muted autoplay loop></video>
+  </div>
+  <div class="work-info">
+    <h2>快速爬牆</h2>
+    <a href="#" class="view-btn" data-video="images/wall.mp4">查看作品</a>
+  </div>
+</div>
+
+</main>
+
+<!-- Lightbox Player -->
+<div class="lightbox" id="lightbox">
+  <span class="close" id="closeBtn">&times;</span>
+  <video id="lightboxVideo" controls></video>
+</div>
+
+<script>
+const buttons = document.querySelectorAll('.view-btn');
+const lightbox = document.getElementById('lightbox');
+const player = document.getElementById('lightboxVideo');
+const closeBtn = document.getElementById('closeBtn');
+
+buttons.forEach(btn=>{
+  btn.addEventListener('click',e=>{
+    e.preventDefault();
+    player.src = btn.dataset.video;
+    lightbox.style.display = 'flex';
+    player.play();
+  });
+});
+
+function close(){
+  player.pause();
+  player.src="";
+  lightbox.style.display='none';
+}
+
+closeBtn.addEventListener('click',close);
+
+lightbox.addEventListener('click',e=>{
+  if(e.target===lightbox) close();
+});
+</script>
+
+</body>
+</html>

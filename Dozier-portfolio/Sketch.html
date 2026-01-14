@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>作品｜Dozier</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  background-color: #ff8800;
+  color: #333;
+}
+
+/* Header */
+header {
+  text-align: center;
+  padding: 60px 20px 40px;
+  color: #F2E4C4;
+}
+
+header h1 {
+  margin: 0;
+  letter-spacing: 6px;
+  font-size: 36px;
+}
+
+header p {
+  margin-top: 10px;
+  opacity: 0.8;
+}
+
+/* Back */
+.back {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 6px 18px;
+  border-radius: 20px;
+  border: 1px solid #F2E4C4;
+  color: #F2E4C4;
+  text-decoration: none;
+  font-size: 13px;
+  transition: 0.3s;
+}
+
+.back:hover {
+  background: #F2E4C4;
+  color: #253059;
+}
+
+/* Grid */
+.gallery {
+  max-width: 1100px;
+  margin: auto;
+  padding: 40px 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+
+@media (min-width: 768px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Work Card */
+.work-card {
+  background: #F2E4C4;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  transition: 0.4s;
+}
+
+.work-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.work-card img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+@media (min-width: 768px) {
+  .work-card img {
+    height: 350px;
+  }
+}
+
+.work-info {
+  padding: 25px 20px;
+}
+
+.work-info h2 {
+  margin: 0 0 12px;
+}
+
+.work-info p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.work-info a {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 10px 22px;
+  background: #ff8a58;
+  color: #F2E4C4;
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.work-info a:hover {
+  background: #67803c;
+}
+
+/* ===== Lightbox ===== */
+.lightbox {
+  display: none; /* 初始隱藏 */
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  animation: fadeIn 0.3s ease;
+}
+
+.lightbox .close {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  font-size: 30px;
+  color: #F2E4C4;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: scale(0.9);}
+  to {opacity: 1; transform: scale(1);}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>隨手畫</h1>
+  <p>Sketch casually / Quick sketch</p>
+  <a href="works.html" class="back">← 回到分類</a>
+</header>
+
+<main class="gallery">
+
+  <div class="work-card">
+    <img src="images/20.jpg">
+    <div class="work-info">
+      <h2>《康坦斯汀》</h2>
+      <p>康坦斯汀電影繪製。</p>
+      <a href="#" class="view-btn" data-img="images/20.jpg">查看作品</a>
+    </div>
+  </div>
+
+  <div class="work-card">
+    <img src="images/12.jpg">
+    <div class="work-info">
+      <h2>BG設計草稿</h2>
+      <p>懸浮的伊斯蘭庭園。</p>
+      <a href="#" class="view-btn" data-img="images/12.jpg">查看作品</a>
+    </div>
+  </div>
+
+  <div class="work-card">
+    <img src="images/13.jpg">
+    <div class="work-info">
+      <h2>炒飯外星人</h2>
+      <p>炒飯外星人準備帶著材料征服地球。</p>
+      <a href="#" class="view-btn" data-img="images/13.jpg">查看作品</a>
+    </div>
+  </div>
+
+  <div class="work-card">
+    <img src="images/25.jpg">
+    <div class="work-info">
+      <h2>瑪麗蓮夢露</h2>
+      <p>電影繪製黑白光影練習。</p>
+      <a href="#" class="view-btn" data-img="images/25.jpg">查看作品</a>
+    </div>
+  </div>
+
+</main>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <span class="close" id="closeBtn">&times;</span>
+  <img src="" id="lightboxImg">
+</div>
+
+<script>
+// 取得所有查看按鈕
+const buttons = document.querySelectorAll('.view-btn');
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+const closeBtn = document.getElementById('closeBtn');
+
+// 點擊按鈕打開 Lightbox
+buttons.forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.preventDefault();
+    const imgSrc = btn.getAttribute('data-img');
+    lightboxImg.src = imgSrc;
+    lightbox.style.display = 'flex';
+  });
+});
+
+// 點擊關閉
+closeBtn.addEventListener('click', () => {
+  lightbox.style.display = 'none';
+});
+
+// 點擊背景也可以關閉
+lightbox.addEventListener('click', e => {
+  if(e.target === lightbox) {
+    lightbox.style.display = 'none';
+  }
+});
+</script>
+
+</body>
+</html>
